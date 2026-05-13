@@ -105,6 +105,7 @@ async def catch_all(request: Request, path: str):
 
 def serve():
     """Entry point for the 'serve' command."""
+    # ruff: noqa: PLC0415
     import uvicorn
 
     uvicorn.run("astro_web.main:app", host="0.0.0.0", port=8000, reload=True)
