@@ -1,7 +1,7 @@
 # Astro Web
 
 A dynamic web application for exploring astronomical databases, built with FastAPI, Jinja2, and Bokeh.   
-This uses the AstrDB Toolkit to explore databases created with it.
+This uses the AstroDB Toolkit to explore databases created with it.
 
 ## Quickstart
 

@@ -15,6 +15,9 @@ You can customize the application behavior by setting these environment variable
 
 ### Additional Configuration
 
+- `ASTRO_WEB_TOML`: Full path to the `database.toml` file
+  - Default: `database.toml` (expected in the current directory)
+  - If present, it dictates what path (and name) the server should use for the configuration file.
 - `ASTRO_WEB_SOURCE_URL_BASE`: Base URL for source detail pages
   - Default: `/source/`
   - Example: `/astro/sources/` (for custom deployment)
