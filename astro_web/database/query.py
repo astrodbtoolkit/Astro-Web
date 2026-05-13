@@ -6,18 +6,20 @@ with timing and error handling.
 """
 
 import time
+
 from astrodbkit.astrodb import Database
 from astropy.coordinates import SkyCoord
 from astropy.units import Quantity
-from src.config import (
-    RA_COLUMN,
-    DEC_COLUMN,
+
+from astro_web.config import (
     CONNECTION_STRING,
+    DEC_COLUMN,
+    FOREIGN_KEY,
     LOOKUP_TABLES,
     PRIMARY_TABLE,
-    SOURCE_COLUMN,
+    RA_COLUMN,
     SCHEMA,
-    FOREIGN_KEY,
+    SOURCE_COLUMN,
 )
 
 

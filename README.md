@@ -24,7 +24,10 @@ Update configuration settings (CONFIG.md) if needed.
 
 ```bash
 # Start the development server
-uvicorn src.main:app --reload --port 8000
+uv run serve
+
+# Or run it manually with
+uvicorn astro_web.main:app --reload --port 8000
 ```
 
 Then open your browser to http://localhost:8000

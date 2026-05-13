@@ -6,9 +6,10 @@ with formatted legends and metadata.
 """
 
 import astropy.units as u
-from bokeh.plotting import figure
 from bokeh.embed import components
-from src.config import SPECTRA_URL_COLUMN
+from bokeh.plotting import figure
+
+from astro_web.config import SPECTRA_URL_COLUMN
 
 
 def generate_spectra_plot(spectra_df):

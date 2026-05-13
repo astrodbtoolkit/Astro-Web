@@ -1,18 +1,19 @@
 """Sources table database queries."""
 
 import logging
+
 from astrodbkit.astrodb import Database
 from specutils import Spectrum
 
-from src.config import (
+from astro_web.config import (
     CONNECTION_STRING,
-    SPECTRA_URL_COLUMN,
-    LOOKUP_TABLES,
-    PRIMARY_TABLE,
-    SOURCE_COLUMN,
-    SCHEMA,
     FOREIGN_KEY,
+    LOOKUP_TABLES,
     PRIMARY_DATATYPE,
+    PRIMARY_TABLE,
+    SCHEMA,
+    SOURCE_COLUMN,
+    SPECTRA_URL_COLUMN,
 )
 
 
@@ -52,7 +53,7 @@ def get_source_inventory(source_name):
     """
     try:
         print(LOOKUP_TABLES)
-        
+
         # Connect to database
         db = Database(
             CONNECTION_STRING,

@@ -5,10 +5,11 @@ This module generates interactive Bokeh scatter plots with ra vs dec
 coordinates from the Sources table.
 """
 
-from bokeh.plotting import figure
 from bokeh.embed import components
-from src.database.sources import get_all_sources
-from src.config import RA_COLUMN, DEC_COLUMN
+from bokeh.plotting import figure
+
+from astro_web.config import DEC_COLUMN, RA_COLUMN
+from astro_web.database.sources import get_all_sources
 
 
 def create_scatter_plot():

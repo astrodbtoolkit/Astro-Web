@@ -49,8 +49,7 @@ htmlcov/
 
 # AI
 .cursor/
-.specify/scripts/
-.specify/templates/
+.specify/
 specs/
 
 # Project-specific

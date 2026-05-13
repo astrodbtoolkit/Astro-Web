@@ -23,4 +23,10 @@ dev = [
 ]
 
 [project.scripts]
-serve = "uvicorn src.main:app --reload --port 8000"
+serve = "astro_web.main:serve"
+
+[tool.uv]
+package = true
+
+[tool.setuptools.packages.find]
+include = ["astro_web*"]
