@@ -51,6 +51,9 @@ htmlcov/
 .cursor/
 .specify/scripts/
 .specify/templates/
+specs/
 
 # Project-specific
 *.sqlite
+*.db
+database.toml
