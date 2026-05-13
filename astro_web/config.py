@@ -61,9 +61,14 @@ default_lookup_tables = [
     "SourceTypeList",
 ]
 LOOKUP_TABLES = os.getenv("ASTRO_WEB_LOOKUP_TABLES", None)
-# If database.toml exists, use the lookup tables from the file
-if os.path.exists("database.toml") and LOOKUP_TABLES is None:
-    with open("database.toml", "rb") as f:
+# Path to the database configuration file
+TOML_PATH = os.getenv("ASTRO_WEB_TOML", "database.toml")
+if TOML_PATH == "":
+    TOML_PATH = "database.toml"
+
+# If the TOML file exists, use the lookup tables from the file
+if os.path.exists(TOML_PATH):
+    with open(TOML_PATH, "rb") as f:
         database_config = tomllib.load(f)
     LOOKUP_TABLES = database_config.get("lookup_tables", LOOKUP_TABLES)
 elif LOOKUP_TABLES is not None and isinstance(LOOKUP_TABLES, str):
