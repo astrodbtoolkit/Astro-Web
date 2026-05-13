@@ -4,12 +4,14 @@ Main FastAPI application entry point for Hello World website.
 This module initializes the FastAPI app with basic configuration.
 """
 
-from fastapi import FastAPI, Request, Form
-from fastapi.responses import HTMLResponse
-from fastapi.templating import Jinja2Templates
-from fastapi.staticfiles import StaticFiles
 from urllib.parse import quote
-from src.routes import web
+
+from fastapi import FastAPI, Form, Request
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
+
+from astro_web.routes import web
 
 app = FastAPI(
     title="Astro Web",
@@ -18,13 +20,13 @@ app = FastAPI(
 )
 
 # Configure Jinja2 templates
-templates = Jinja2Templates(directory="src/templates")
+templates = Jinja2Templates(directory="astro_web/templates")
 # Add urlencode filter for URL encoding source names
 templates.env.filters["urlencode"] = lambda u: quote(str(u), safe="")
 web.set_templates(templates)
 
 # Configure static file serving
-app.mount("/static", StaticFiles(directory="src/static"), name="static")
+app.mount("/static", StaticFiles(directory="astro_web/static"), name="static")
 
 
 @app.get("/", response_class=HTMLResponse)
@@ -99,3 +101,10 @@ async def inventory_api_endpoint(source: str = Form(...)):
 async def catch_all(request: Request, path: str):
     """404 handler for non-existent pages."""
     return await web.not_found(request, path)
+
+
+def serve():
+    """Entry point for the 'serve' command."""
+    import uvicorn
+
+    uvicorn.run("astro_web.main:app", host="0.0.0.0", port=8000, reload=True)

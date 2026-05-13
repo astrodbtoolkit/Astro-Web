@@ -4,17 +4,17 @@ Web page routes for Hello World website.
 This module contains all HTML page routes including homepage and error pages.
 """
 
-from urllib.parse import unquote
 from datetime import datetime
+from urllib.parse import unquote
 
-from fastapi import Request, Form, HTTPException
+from fastapi import Form, HTTPException, Request
 from fastapi.templating import Jinja2Templates
 
-from src.database.sources import get_all_sources, get_source_inventory, get_source_spectra
-from src.database.query import search_objects, parse_coordinates_string, convert_radius_to_degrees, cone_search
-from src.visualizations.scatter import create_scatter_plot
-from src.visualizations.spectra import generate_spectra_plot
-from src.config import get_source_url
+from astro_web.config import get_source_url
+from astro_web.database.query import cone_search, convert_radius_to_degrees, parse_coordinates_string, search_objects
+from astro_web.database.sources import get_all_sources, get_source_inventory, get_source_spectra
+from astro_web.visualizations.scatter import create_scatter_plot
+from astro_web.visualizations.spectra import generate_spectra_plot
 
 # Templates instance - will be imported from main
 templates = None
