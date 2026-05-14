@@ -55,7 +55,7 @@ async def homepage(request: Request):
     # Create navigation context with active page
     nav_context = create_navigation_context(current_page="/")
 
-    return templates.TemplateResponse("index.html", {"request": request, **nav_context})
+    return templates.TemplateResponse(request, "index.html", {"request": request, **nav_context})
 
 
 async def browse(request: Request):
@@ -75,6 +75,7 @@ async def browse(request: Request):
     nav_context = create_navigation_context(current_page="/browse")
 
     return templates.TemplateResponse(
+        request,
         "browse.html",
         {
             "request": request,
@@ -95,6 +96,7 @@ async def plot(request: Request):
     nav_context = create_navigation_context(current_page="/plots")
 
     return templates.TemplateResponse(
+        request,
         "plot.html",
         {
             "request": request,
@@ -134,6 +136,7 @@ async def inventory(request: Request, source_name: str):
     nav_context = create_navigation_context(current_page=f"/source/{source_name}")
 
     return templates.TemplateResponse(
+        request,
         "inventory.html",
         {
             "request": request,
@@ -171,6 +174,7 @@ async def spectra_display(request: Request, source_name: str):
     nav_context = create_navigation_context(current_page=f"/source/{source_name}/spectra")
 
     return templates.TemplateResponse(
+        request,
         "spectra.html",
         {
             "request": request,
@@ -193,7 +197,7 @@ async def search_form(request: Request):
     # Create navigation context with active page
     nav_context = create_navigation_context(current_page="/search")
 
-    return templates.TemplateResponse("search.html", {"request": request, **nav_context})
+    return templates.TemplateResponse(request, "search.html", {"request": request, **nav_context})
 
 
 async def search_results(request: Request, query: str = Form(...)):
@@ -203,7 +207,7 @@ async def search_results(request: Request, query: str = Form(...)):
         if not query.strip():
             nav_context = create_navigation_context(current_page="/search")
             return templates.TemplateResponse(
-                "search.html", {"request": request, "error": "Please enter a search term", **nav_context}
+                request, "search.html", {"request": request, "error": "Please enter a search term", **nav_context}
             )
 
         # Execute search using astrodbkit
@@ -219,6 +223,7 @@ async def search_results(request: Request, query: str = Form(...)):
         nav_context = create_navigation_context(current_page="/search")
 
         return templates.TemplateResponse(
+            request,
             "search_results.html",
             {
                 "request": request,
@@ -234,6 +239,7 @@ async def search_results(request: Request, query: str = Form(...)):
         # Handle astrodbkit errors
         nav_context = create_navigation_context(current_page="/search")
         return templates.TemplateResponse(
+            request,
             "search_results.html",
             {
                 "request": request,
@@ -302,6 +308,7 @@ async def cone_search_results(
         formatted_results = get_source_url(formatted_results)
 
         return templates.TemplateResponse(
+            request,
             "search_results.html",
             {
                 "request": request,
@@ -319,10 +326,11 @@ async def cone_search_results(
 
     except ValueError as e:
         # Validation errors - return to search page with error
-        return templates.TemplateResponse("search.html", {"request": request, "error": str(e), **nav_context})
+        return templates.TemplateResponse(request, "search.html", {"request": request, "error": str(e), **nav_context})
     except Exception as e:
         # Database errors - return results page with error
         return templates.TemplateResponse(
+            request,
             "search_results.html",
             {
                 "request": request,
@@ -396,4 +404,4 @@ async def inventory_api(source_name: str = Form(...)):
 
 async def not_found(request: Request, path: str):
     """Render 404 error page for non-existent routes."""
-    return templates.TemplateResponse("404.html", {"request": request, "path": path}, status_code=404)
+    return templates.TemplateResponse(request, "404.html", {"request": request, "path": path}, status_code=404)
