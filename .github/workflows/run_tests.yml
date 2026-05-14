@@ -16,6 +16,15 @@ permissions:
 jobs:  
   test:
     runs-on: ubuntu-latest
+    env:
+      ASTRO_WEB_DATABASE_URL: "sqlite:///SIMPLE.sqlite"
+      ASTRO_WEB_LOOKUP_TABLES: "Publications,Telescopes,Instruments,PhotometryFilters,Versions,RegimeList,SourceTypeList,ParameterList,AssociationList,CompanionList,Modes,Filters,Citations,References,Parameters,Regimes"
+      ASTRO_WEB_PRIMARY_TABLE: "Sources"
+      ASTRO_WEB_SOURCE_COLUMN: "source"
+      ASTRO_WEB_FOREIGN_KEY: "source"
+      ASTRO_WEB_RA_COLUMN: "ra"
+      ASTRO_WEB_DEC_COLUMN: "dec"
+      ASTRO_WEB_SPECTRA_URL_COLUMN: "access_url"
     strategy:
       matrix:
         python-version: ["3.13"]

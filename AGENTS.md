@@ -15,4 +15,7 @@ Astro Web is a FastAPI-based web application for exploring astronomical database
 - `CONFIG.md`: Configuration settings guide.
 - `pyproject.toml`: Project metadata and dependencies (managed by uv).
 - `.env.example`: Template for environment variables.
-- `constitution.md`: Project constitution and development guidelines (for AI agents).
+- `constitution.md`: Project constitution and development guidelines.
+
+## Guidance
+Prior to making any code changes, read the `constitution.md` file to understand the project's development guidelines and coding standards.
