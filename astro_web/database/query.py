@@ -7,20 +7,14 @@ with timing and error handling.
 
 import time
 
-from astrodbkit.astrodb import Database
 from astropy.coordinates import SkyCoord
 from astropy.units import Quantity
 
 from astro_web.config import (
-    CONNECTION_STRING,
     DEC_COLUMN,
-    FOREIGN_KEY,
-    LOOKUP_TABLES,
-    PRIMARY_TABLE,
     RA_COLUMN,
-    SCHEMA,
-    SOURCE_COLUMN,
 )
+from astro_web.database import get_db
 
 
 def search_objects(query: str):
@@ -36,15 +30,8 @@ def search_objects(query: str):
                and execution_time is the time taken in seconds
     """
     start_time = time.time()
-    db = Database(
-        CONNECTION_STRING,
-        primary_table=PRIMARY_TABLE,
-        primary_table_key=SOURCE_COLUMN,
-        lookup_tables=LOOKUP_TABLES,
-        schema=SCHEMA,
-        foreign_key=FOREIGN_KEY,
-    )
-    results = db.search_object(query.strip(), resolve_simbad=True, format="pandas")
+    with get_db() as db:
+        results = db.search_object(query.strip(), resolve_simbad=True, fmt="pandas")
     execution_time = time.time() - start_time
 
     return results, execution_time
@@ -68,18 +55,20 @@ def parse_coordinates_string(coords_str):
     """
     coords_str = coords_str.strip()
 
-    # Check if the string contains sexagesimal indicators (h, m, s, d, etc.)
-    has_sexagesimal = any(char in coords_str.lower() for char in ["h", "m", "s", "d", "°", "'", '"'])
+    # Check if the string contains sexagesimal indicators or has multiple parts
+    parts = coords_str.split()
+    has_sexagesimal = (
+        any(char in coords_str.lower() for char in ["h", "m", "s", "d", "°", "'", '"', ":"]) or len(parts) > 2
+    )
 
     try:
         if has_sexagesimal:
-            # For sexagesimal format, SkyCoord can auto-detect
-            skycoord = SkyCoord(coords_str, frame="icrs")
+            # For sexagesimal format, assume hourangle for RA if not explicit
+            skycoord = SkyCoord(coords_str, frame="icrs", unit=("hour", "deg"))
             ra_decimal = skycoord.ra.deg
             dec_decimal = skycoord.dec.deg
         else:
             # For decimal format, split and parse manually
-            parts = coords_str.split()
             if len(parts) != 2:
                 raise ValueError("Expected two space-separated values for decimal coordinates (e.g., '209.30 14.48')")
 
@@ -153,17 +142,12 @@ def cone_search(ra, dec, radius_deg):
                and execution_time is the time taken in seconds
     """
     start_time = time.time()
-    db = Database(
-        CONNECTION_STRING,
-        primary_table=PRIMARY_TABLE,
-        primary_table_key=SOURCE_COLUMN,
-        lookup_tables=LOOKUP_TABLES,
-        schema=SCHEMA,
-        foreign_key=FOREIGN_KEY,
-    )
     coords = SkyCoord(ra, dec, unit="deg")
     radius = Quantity(radius_deg, "deg")
-    results = db.query_region(coords, radius=radius, fmt="pandas", ra_col=RA_COLUMN, dec_col=DEC_COLUMN)
+
+    with get_db() as db:
+        results = db.query_region(coords, radius=radius, fmt="pandas", ra_col=RA_COLUMN, dec_col=DEC_COLUMN)
+
     execution_time = time.time() - start_time
 
     # Apply 10,000 result cap if needed

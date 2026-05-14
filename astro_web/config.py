@@ -55,6 +55,7 @@ default_lookup_tables = [
     "Versions",
     "Parameters",
     "Regimes",
+    "RegimeList",
     "ParameterList",
     "AssociationList",
     "CompanionList",
