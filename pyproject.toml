@@ -21,6 +21,8 @@ dependencies = [
 dev = [
     "pytest>=8.0.0",
     "ruff>=0.14.0",
+    "httpx>=0.28.1",
+    "pytest-cov>=7.1.0",
 ]
 
 [project.scripts]
@@ -31,3 +33,23 @@ package = true
 
 [tool.setuptools.packages.find]
 include = ["astro_web*"]
+
+# coverage configuration
+[tool.coverage.run]
+data_file = ".coverage"
+source = [
+    "astro_web"
+]
+omit = [
+    "templates/", 
+]
+
+[tool.coverage.report]
+omit = ["__init__.py"]
+exclude_lines = [
+    "pragma: no cover",
+    "raise NotImplementedError",
+    "if __name__ == '__main__':",
+    "if r.status_code != 200:",
+    "except Exception as e:",
+]

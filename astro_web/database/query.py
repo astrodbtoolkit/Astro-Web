@@ -68,18 +68,18 @@ def parse_coordinates_string(coords_str):
     """
     coords_str = coords_str.strip()
 
-    # Check if the string contains sexagesimal indicators (h, m, s, d, etc.)
-    has_sexagesimal = any(char in coords_str.lower() for char in ["h", "m", "s", "d", "°", "'", '"'])
+    # Check if the string contains sexagesimal indicators or has multiple parts
+    parts = coords_str.split()
+    has_sexagesimal = any(char in coords_str.lower() for char in ["h", "m", "s", "d", "°", "'", '"', ":"]) or len(parts) > 2
 
     try:
         if has_sexagesimal:
-            # For sexagesimal format, SkyCoord can auto-detect
-            skycoord = SkyCoord(coords_str, frame="icrs")
+            # For sexagesimal format, assume hourangle for RA if not explicit
+            skycoord = SkyCoord(coords_str, frame="icrs", unit=("hour", "deg"))
             ra_decimal = skycoord.ra.deg
             dec_decimal = skycoord.dec.deg
         else:
             # For decimal format, split and parse manually
-            parts = coords_str.split()
             if len(parts) != 2:
                 raise ValueError("Expected two space-separated values for decimal coordinates (e.g., '209.30 14.48')")
 

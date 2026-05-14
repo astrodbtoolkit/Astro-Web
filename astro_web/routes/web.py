@@ -266,6 +266,8 @@ async def search_api(query: str = Form(...)):
             "execution_time": execution_time,
         }
 
+    except HTTPException:
+        raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"An error occurred during search: {e}")
 
