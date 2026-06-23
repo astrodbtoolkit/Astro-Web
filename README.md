@@ -19,7 +19,7 @@ uv sync
 
 ### Running the Application
 
-Grab a copy of the database at https://github.com/SIMPLE-AstroDB/SIMPLE-binary and place it in the main directory.   
+Grab a copy of the database at https://github.com/astrodbtoolkit/astrodb-template-db and place it in the main directory.   
 Update configuration settings (CONFIG.md) if needed.
 
 ```bash

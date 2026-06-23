@@ -17,11 +17,19 @@ The tests are split into two main categories:
 ## Requirements
 
 ### Database
-Integration tests require a copy of the **SIMPLE** database in the project root.
-- **File name**: `SIMPLE.sqlite`
-- **Download**: You can download the latest version from [SIMPLE-AstroDB/SIMPLE-binary](https://github.com/SIMPLE-AstroDB/SIMPLE-binary/raw/main/SIMPLE.sqlite).
+Integration tests require a copy of the **astrodb-template** database in the project root.
+- **File name**: `astrodb-template.sqlite`
+- **Download**: You can download the latest version from [astrodbtoolkit/astrodb-template-db](https://github.com/astrodbtoolkit/astrodb-template-db/raw/main/astrodb-template.sqlite).
 
-The tests expect this file to be present at the path specified by `ASTRO_WEB_DATABASE_URL` (defaults to `sqlite:///SIMPLE.sqlite`).
+The tests expect this file to be present at the path specified by `ASTRO_WEB_DATABASE_URL` (defaults to `sqlite:///astrodb-template.sqlite`).
+
+> **Note**: The template database has no `Spectra` rows, so spectra-dependent tests are marked `xfail` (expected to fail).
+
+### Environment
+Configuration is read from environment variables (see `astro_web/config.py`). Copy `.env.example` to `.env` so the integration tests resolve the correct database path and column names (e.g. `ra_deg`/`dec_deg`):
+```bash
+cp .env.example .env
+```
 
 ### Dependencies
 All testing dependencies are included in the `dev` optional dependency group in `pyproject.toml`.
@@ -43,10 +51,10 @@ uv run pytest --cov
 You can target specific directories or files:
 ```bash
 # Run only unit tests
-uv run pytest test/unit
+uv run pytest tests/unit
 
 # Run only database integration tests
-uv run pytest test/integration/database
+uv run pytest tests/integration/database
 ```
 
 ## Continuous Integration

@@ -7,7 +7,7 @@ You can customize the application behavior by setting these environment variable
 ### Database Configuration
 
 - `ASTRO_WEB_DATABASE_URL`: Database connection string
-  - Default: `sqlite:///SIMPLE.sqlite`
+  - Default: `sqlite:///astrodb-template.sqlite`
   - Examples:
     - SQLite: `sqlite:///path/to/database.db`
     - PostgreSQL: `postgresql://username:password@localhost:5432/astrodb`
@@ -32,9 +32,9 @@ You can customize the application behavior by setting these environment variable
 - `ASTRO_WEB_FOREIGN_KEY`: Foreign key column name for the primary table
   - Default: `source`
 - `ASTRO_WEB_RA_COLUMN`: Column name for the right ascension
-  - Default: `ra`
+  - Default: `ra_deg`
 - `ASTRO_WEB_DEC_COLUMN`: Column name for the declination
-  - Default: `dec`
+  - Default: `dec_deg`
 - `ASTRO_WEB_SPECTRA_URL_COLUMN`: Column name for the spectrum data URL/path
   - Default: `access_url`
   - Used when retrieving spectra for visualization

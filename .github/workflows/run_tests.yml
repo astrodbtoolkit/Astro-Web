@@ -17,13 +17,13 @@ jobs:
   test:
     runs-on: ubuntu-latest
     env:
-      ASTRO_WEB_DATABASE_URL: "sqlite:///SIMPLE.sqlite"
-      ASTRO_WEB_LOOKUP_TABLES: "Publications,Telescopes,Instruments,PhotometryFilters,Versions,RegimeList,SourceTypeList,ParameterList,AssociationList,CompanionList,Modes,Filters,Citations,References,Parameters,Regimes"
+      ASTRO_WEB_DATABASE_URL: "sqlite:///astrodb-template.sqlite"
+      ASTRO_WEB_LOOKUP_TABLES: "Publications,Telescopes,Instruments,PhotometryFilters,Versions,RegimeList,SourceTypeList,ParameterList,AssociationList,CompanionList,References"
       ASTRO_WEB_PRIMARY_TABLE: "Sources"
       ASTRO_WEB_SOURCE_COLUMN: "source"
       ASTRO_WEB_FOREIGN_KEY: "source"
-      ASTRO_WEB_RA_COLUMN: "ra"
-      ASTRO_WEB_DEC_COLUMN: "dec"
+      ASTRO_WEB_RA_COLUMN: "ra_deg"
+      ASTRO_WEB_DEC_COLUMN: "dec_deg"
       ASTRO_WEB_SPECTRA_URL_COLUMN: "access_url"
     strategy:
       matrix:
@@ -48,7 +48,7 @@ jobs:
 
     - name: Download database
       run: |
-        curl -L https://github.com/SIMPLE-AstroDB/SIMPLE-binary/raw/main/SIMPLE.sqlite -o SIMPLE.sqlite
+        curl -L https://github.com/astrodbtoolkit/astrodb-template-db/raw/main/astrodb-template.sqlite -o astrodb-template.sqlite
 
     - name: Run linter
       run: |
