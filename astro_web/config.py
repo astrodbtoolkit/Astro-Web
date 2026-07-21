@@ -16,7 +16,7 @@ load_dotenv()
 
 # Database Configuration
 # Default to SQLite database in project root
-CONNECTION_STRING = os.getenv("ASTRO_WEB_DATABASE_URL", "sqlite:///SIMPLE.sqlite")
+CONNECTION_STRING = os.getenv("ASTRO_WEB_DATABASE_URL", "sqlite:///astrodb-template.sqlite")
 
 # Base URL for source detail pages - can be customized for different deployments
 ASTRO_WEB_SOURCE_URL_BASE = os.getenv("ASTRO_WEB_SOURCE_URL_BASE", "/source/")
